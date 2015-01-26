@@ -56,7 +56,8 @@ If accessing from another machine, vnc to the machine, or use a vpn service, and
 http://localhost:4567/ , or
 https://localhost:4567/ once you've enabled ssl.
 
-
+## Support 
+If you'd like to contribute to the project, you can either post bounties for desired features [here](https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant), or click the link below:
 
 
 ## Thanks

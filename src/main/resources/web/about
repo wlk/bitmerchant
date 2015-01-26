@@ -11,6 +11,11 @@ a href="api.html"
 ../
 src/main/resources/web/
 
+   <li><a href="/wallet">Wallet</a>
+            </li>
+
+  nada
+
  -->
 <head>
   <meta charset="utf-8">

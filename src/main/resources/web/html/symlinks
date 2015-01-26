@@ -9,6 +9,9 @@ about
 
 symlinks
 -----
+
+
+rm orders api order_details merchant_settings tools settings wallet about support
 ln -s html/orders.html orders
 ln -s html/api.html api
 ln -s html/order_details.html order_details
@@ -17,4 +20,13 @@ ln -s html/tools_page.html tools
 ln -s html/settings.html settings
 ln -s html/wallet.html wallet
 ln -s html/about.html about
+ln -s html/support.html support
+
+cd ~/git/bitmerchant/
+rm api.html index.html about.html
+ln -s src/main/resources/web/html/api_gh.html api.html
+ln -s src/main/resources/web/html/about_gh.html about.html
+ln -s src/main/resources/web/html/support.html support.html
+
+
 
