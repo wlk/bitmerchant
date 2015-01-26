@@ -57,7 +57,7 @@ http://localhost:4567/ , or
 https://localhost:4567/ once you've enabled ssl.
 
 ## Support 
-If you'd like to contribute to the project, you can either post bounties for desired features [here](https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant), or click the link below:
+If you'd like to contribute to the project, you can either post bounties for desired features [here](https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant), or click [this link](http://tchoulihan.github.io/bitmerchant/support.html).
 
 
 ## Thanks
