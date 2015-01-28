@@ -26,18 +26,30 @@ For more information, head over to http://tchoulihan.github.io/bitmerchant/
 <img src="http://i.imgur.com/BR58XBa.png">
 <img src="http://i.imgur.com/6QQ3kyN.png">
 
-
 ## Installation
+Download the jar, located [here](https://github.com/tchoulihan/bitmerchant/releases/download/v1.1/bitmerchant-shaded.jar)
 
-To install Bitmerchant, make sure you have both java 8, and maven installed. Then run the following commands:
+And run the command:
+<pre>java -jar bitmerchant-shaded.jar [parameters]</pre>
+<pre>parameters:
+	-testnet  : run on the bitcoin testnet3
+	-deleteDB : delete the local database before starting
+	-loglevel [INFO,WARN, etc] : Sets the log level
+</pre>
+
+If accessing from another machine, vnc to the machine, or use a vpn service, and access either
+http://localhost:4567/ , or
+https://localhost:4567/ once you've enabled ssl.
+
+## Building from scratch
+
+To build Bitmerchant, make sure you have both java 8, and maven installed. Then run the following commands:
 ```
 git clone https://github.com/tchoulihan/bitmerchant
 cd bitmerchant
 mvn install
 ```
-
-
-To run Bitmerchant
+To run Bitmerchant:
 
 <pre>
 java -jar target/bitmerchant-shaded.jar [parameters]
@@ -55,6 +67,8 @@ parameters:
 If accessing from another machine, vnc to the machine, or use a vpn service, and access either
 http://localhost:4567/ , or
 https://localhost:4567/ once you've enabled ssl.
+
+
 
 ## Support 
 If you'd like to contribute to the project, you can either post bounties for desired features [here](https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant), or click [this link](http://tchoulihan.github.io/bitmerchant/support.html).
