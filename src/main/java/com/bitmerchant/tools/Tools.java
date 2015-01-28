@@ -6,13 +6,15 @@ import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,21 +28,23 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.utils.MonetaryFormat;
 import org.codehaus.jackson.JsonNode;
@@ -80,7 +84,7 @@ public class Tools {
 	public static void allowOnlyLocalHeaders(Request req, Response res) {
 
 
-
+		log.info("req ip = " + req.ip());
 
 
 		//		res.header("Access-Control-Allow-Origin", "http://mozilla.com");
@@ -88,7 +92,7 @@ public class Tools {
 		//		res.header("Access-Control-Allow-Origin", "*");
 		//		res.header("Access-Control-Allow-Credentials", "true");
 
-		if (!req.ip().equals("127.0.0.1")) {
+		if (!(req.ip().equals("127.0.0.1") || req.ip().equals("0:0:0:0:0:0:0:1"))) {
 			throw new NoSuchElementException("Not a local ip, can't access");
 		}
 	}
@@ -193,14 +197,14 @@ public class Tools {
 		Coin fee = tx.getFee();
 
 		map.put("transaction_hash", tx.getHashAsString());
-		
+
 		String blockExplorerURL;
 		if (LocalWallet.params.equals(TestNet3Params.get())) {
 			blockExplorerURL = "https://www.blockexplorer.com/testnet/tx/" + tx.getHashAsString();
 		} else {
 			blockExplorerURL = "https://www.blockexplorer.com/tx/" + tx.getHashAsString();
 		}
-		
+
 		map.put("blockexplorer_url", blockExplorerURL);
 
 
@@ -620,6 +624,114 @@ public class Tools {
 
 	}
 
+	public boolean copyJarResourcesRecursively(String originURL, final File destDir) {
+
+
+		try {
+			log.info(super.getClass().toGenericString());
+			URL derp = super.getClass().getResource(originURL);
+			log.info(derp.toString());
+			derp.openConnection();
+
+			JarURLConnection jarConnection = (JarURLConnection)Tools.class.getResource(originURL).openConnection();
+
+			final JarFile jarFile = jarConnection.getJarFile();
+
+			for (final Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements();) {
+				final JarEntry entry = e.nextElement();
+				if (entry.getName().startsWith(jarConnection.getEntryName())) {
+					final String filename = removeStart(entry.getName(), //
+							jarConnection.getEntryName());
+
+					final File f = new File(destDir, filename);
+					if (!entry.isDirectory()) {
+						final InputStream entryInputStream = jarFile.getInputStream(entry);
+						java.nio.file.Files.copy(entryInputStream, f.toPath());
+						entryInputStream.close();
+					} else {
+						if (f.exists()) {
+							throw new IOException("Could not create directory: "
+									+ f.getAbsolutePath());
+						}
+					}
+				}
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
+	public static String removeStart(String str, String remove) {
+		if (isEmpty(str) || isEmpty(remove)) {
+			return str;
+		}
+		if (str.startsWith(remove)){
+			return str.substring(remove.length());
+		}
+		return str;
+	}
+	public static boolean isEmpty(CharSequence cs) {
+		return cs == null || cs.length() == 0;
+	}
+
+	public static void unzip(File zipfile, File directory) {
+		try {
+			ZipFile zfile = new ZipFile(zipfile);
+			Enumeration<? extends ZipEntry> entries = zfile.entries();
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				File file = new File(directory, entry.getName());
+				if (entry.isDirectory()) {
+					file.mkdirs();
+				} else {
+					file.getParentFile().mkdirs();
+					InputStream in = zfile.getInputStream(entry);
+					try {
+						copy(in, file);
+					} finally {
+						in.close();
+					}
+				}
+			}
+			
+			zfile.close();
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void copy(InputStream in, OutputStream out) throws IOException {
+	    byte[] buffer = new byte[1024];
+	    while (true) {
+	      int readCount = in.read(buffer);
+	      if (readCount < 0) {
+	        break;
+	      }
+	      out.write(buffer, 0, readCount);
+	    }
+	  }
+
+	  private static void copy(File file, OutputStream out) throws IOException {
+	    InputStream in = new FileInputStream(file);
+	    try {
+	      copy(in, out);
+	    } finally {
+	      in.close();
+	    }
+	  }
+
+	  private static void copy(InputStream in, File file) throws IOException {
+	    OutputStream out = new FileOutputStream(file);
+	    try {
+	      copy(in, out);
+	    } finally {
+	      out.close();
+	    }
+	  }
 }
 
 

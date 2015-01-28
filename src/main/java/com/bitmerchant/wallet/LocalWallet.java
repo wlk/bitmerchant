@@ -1,6 +1,11 @@
 package com.bitmerchant.wallet;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.URLConnection;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.annotation.Nullable;
 
@@ -23,6 +28,7 @@ import com.bitmerchant.db.InitializeTables;
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.webservice.WebService;
+import com.google.common.io.Files;
 
 
 /**
@@ -40,7 +46,7 @@ import com.bitmerchant.webservice.WebService;
 public class LocalWallet {
 
 	static  Logger log = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-	
+
 
 	public static NetworkParameters params;
 	public static WalletAppKit bitcoin;
@@ -48,89 +54,114 @@ public class LocalWallet {
 
 	public static LocalWallet INSTANCE = new LocalWallet();
 
-	
-    @Option(name="-testnet",usage="Run using the Bitcoin testnet3")
-    private boolean testnet;
 
-    @Option(name="-deleteDB",usage="Delete the sqlite DB before running.")
-    private boolean deleteDB;
-    
-    @Option(name="-loglevel", usage="Sets the log level [INFO, DEBUG, etc.]")     
-    private String loglevel = "INFO";
-    
+	@Option(name="-testnet",usage="Run using the Bitcoin testnet3")
+	private boolean testnet;
+
+	@Option(name="-deleteDB",usage="Delete the sqlite DB before running.")
+	private boolean deleteDB;
+
+	@Option(name="-loglevel", usage="Sets the log level [INFO, DEBUG, etc.]")     
+	private String loglevel = "INFO";
+
 	public void doMain(String[] args) {
 
-		
+
 		parseArguments(args);
-		
-		
+
+
 		log.setLevel(Level.toLevel(loglevel));
 
 		// get the correct network
 		params = (testnet) ? TestNet3Params.get() : MainNetParams.get();
 		DataSources.HOME_DIR = (testnet) ? DataSources.HOME_DIR  + "/testnet" : DataSources.HOME_DIR;
-		
+
 		setupDirectories();
-		
+
+		copyResourcesToHomeDir();
+
 		// Initialize the DB if it hasn't already
 		InitializeTables.init(deleteDB);
-	
-		
-		
-		
+
+
+
+
 		// Start the wallet
 		INSTANCE.init();
 
 		// Start the web service
 		WebService.start();
-		
+
 
 
 		Tools.pollAndOpenStartPage();
-		
+
 
 	}
 
 	private void parseArguments(String[] args) {
 		CmdLineParser parser = new CmdLineParser(this);
-		
+
 		try {
 
 			parser.parseArgument(args);
-			
+
 		} catch (CmdLineException e) {
-			 // if there's a problem in the command line,
-            // you'll get this exception. this will report
-            // an error message.
-            System.err.println(e.getMessage());
-            System.err.println("java LocalWallet [options...] arguments...");
-            // print the list of available options
-            parser.printUsage(System.err);
-            System.err.println();
+			// if there's a problem in the command line,
+			// you'll get this exception. this will report
+			// an error message.
+			System.err.println(e.getMessage());
+			System.err.println("java LocalWallet [options...] arguments...");
+			// print the list of available options
+			parser.printUsage(System.err);
+			System.err.println();
 
 
-            return;
+			return;
 		}
 	}
 	public static void main( String[] args ) {
-		
+
 		new LocalWallet().doMain(args);
-		
+
 	}
 
 	public void init() {
-	
-	
+
+
 		setupWalletKit(null);
-	
-	
+
+
 		bitcoin.startAsync();
-	
+
 	}
 
 	public static void setupDirectories() {
 		log.info("Setting up ~/.bitmerchant dirs");
 		new File(DataSources.HOME_DIR).mkdirs();
+	}
+
+	public static void copyResourcesToHomeDir() {
+		log.info("Copying resources to  ~/.bitmerchant dirs");
+
+		String zipFile = null;
+		try {
+			if (new File(DataSources.SHADED_JAR_FILE).exists()) {
+				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE), Paths.get(DataSources.ZIP_FILE), 
+						StandardCopyOption.REPLACE_EXISTING);
+				zipFile = DataSources.SHADED_JAR_FILE;
+				
+			} else if (new File(DataSources.SHADED_JAR_FILE_2).exists()) {
+				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE_2), Paths.get(DataSources.ZIP_FILE),
+						StandardCopyOption.REPLACE_EXISTING);
+				zipFile = DataSources.SHADED_JAR_FILE_2;
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		Tools.unzip(new File(zipFile), new File(DataSources.SOURCE_CODE_HOME));
+		//		new Tools().copyJarResourcesRecursively("src", configHome);
 	}
 
 	public void stop() throws Exception {
@@ -143,7 +174,7 @@ public class LocalWallet {
 	public void restart() throws Exception {
 		bitcoin.stopAsync();
 		bitcoin.awaitTerminated();
-		
+
 		Tools.restartApplication();
 	}
 
@@ -151,7 +182,7 @@ public class LocalWallet {
 		controller = new Controller();
 		// If seed is non-null it means we are restoring from backup.
 		bitcoin = new WalletAppKit(params, new File(DataSources.HOME_DIR), DataSources.APP_NAME) {
-	
+
 			@Override
 			protected void onSetupCompleted() {
 				// Don't make the user wait for confirmations for now, as the intention is they're sending it
@@ -163,7 +194,7 @@ public class LocalWallet {
 				controller.onBitcoinSetup();
 				//                Platform.runLater(controller::onBitcoinSetup);
 			}
-	
+
 		};
 		// Now configure and start the appkit. This will take a second or two - we could show a temporary splash screen
 		// or progress widget to keep the user engaged whilst we initialise, but we don't.
@@ -174,22 +205,22 @@ public class LocalWallet {
 			//			bitcoin.useTor();
 			// bitcoin.setDiscovery(new HttpDiscovery(params, URI.create("http://localhost:8080/peers"), ECKey.fromPublicOnly(BaseEncoding.base16().decode("02cba68cfd0679d10b186288b75a59f9132b1b3e222f6332717cb8c4eb2040f940".toUpperCase()))));
 		}
-	
+
 		// The progress bar stuff
-	
+
 		bitcoin.setDownloadListener(controller.progressBarUpdater())
 		.setBlockingStartup(false)
 		.setUserAgent(DataSources.APP_NAME, "1.0");
-	
+
 		if (seed != null)
 			bitcoin.restoreWalletFromSeed(seed);
-	
-	
-	
-	
-	}
-	
 
-	
-	
+
+
+
+	}
+
+
+
+
 }
