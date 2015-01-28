@@ -40,7 +40,7 @@ mvn install
 To run Bitmerchant
 
 <pre>
-java -jar target/bitmerchant.jar [parameters]
+java -jar target/bitmerchant-shaded.jar [parameters]
 
 or better, use the run script, which also creates a log.out:
 
@@ -62,4 +62,9 @@ If you'd like to contribute to the project, you can either post bounties for des
 
 ## Thanks
 * Special thanks to Mike Hearn and Andreas Schildbach for their assistance with BIP70 and refunding orders.
+
+## Feature requests / todos
+* Increase memory params
+* Possible buttercoin integration
+* Add [-fullnode parameter]
 
