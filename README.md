@@ -20,6 +20,7 @@ For more information, head over to http://tchoulihan.github.io/bitmerchant/
 * Uses the BIP70 Payment protocol to ensure correct payment amounts, and refund addresses.
 * Implement your own SSL certs.
 
+
 ## Screenshots:
 <img src="http://i.imgur.com/V6BHKZy.png">
 <img src="http://i.imgur.com/21kdKit.png">
@@ -27,7 +28,7 @@ For more information, head over to http://tchoulihan.github.io/bitmerchant/
 <img src="http://i.imgur.com/6QQ3kyN.png">
 
 ## Installation
-Download the jar, located [here](https://github.com/tchoulihan/bitmerchant/releases/download/v1.1/bitmerchant-shaded.jar)
+Download the jar, located [here](https://github.com/tchoulihan/bitmerchant/releases/download/v1.2/bitmerchant-shaded.jar)
 
 And run the command:
 <pre>java -jar bitmerchant-shaded.jar [parameters]</pre>
