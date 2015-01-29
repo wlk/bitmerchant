@@ -212,7 +212,7 @@ public class Actions {
 			o.set("status_id", OrderStatus.findFirst("status=?", "new").getId().toString());
 
 			// TODO For now, set the memo to the button name
-			o.set("memo", b.getString("nameadv"));
+			o.set("memo", b.getString("name"));
 
 			// Set the currency to the most recent currency
 			CurrencyConverter cc = CurrencyConverter.INSTANCE;
