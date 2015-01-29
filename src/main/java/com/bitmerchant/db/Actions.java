@@ -211,8 +211,11 @@ public class Actions {
 
 			o.set("status_id", OrderStatus.findFirst("status=?", "new").getId().toString());
 
+			MerchantInfo mi = MerchantInfo.findById(1);
+			
+			String memo = mi.getString("name") + " : " + b.getString("name");
 			// TODO For now, set the memo to the button name
-			o.set("memo", b.getString("name"));
+			o.set("memo", memo);
 
 			// Set the currency to the most recent currency
 			CurrencyConverter cc = CurrencyConverter.INSTANCE;
