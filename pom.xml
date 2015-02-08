@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<activejdbc.version>1.4.10-SNAPSHOT</activejdbc.version>
+		<activejdbc.version>1.4.10</activejdbc.version>
 		<version>0.0.1</version>
 	</properties>
 	<repositories>
@@ -62,6 +62,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
 				<executions>
 					<!-- Create the bundled JAR, it's easier for some people -->
 					<execution>
@@ -92,7 +93,7 @@
 
 								</transformer>
 							</transformers>
-							<outputFile>target/${artifactId}-shaded.jar</outputFile>
+							<outputFile>target/${project.artifactId}-shaded.jar</outputFile>
 						</configuration>
 					</execution>
 				</executions>
