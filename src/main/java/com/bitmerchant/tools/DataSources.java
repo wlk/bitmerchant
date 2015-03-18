@@ -1,5 +1,7 @@
 package com.bitmerchant.tools;
 
+import com.bitmerchant.wallet.LocalWallet;
+
 
 public class DataSources {
 
@@ -11,7 +13,13 @@ public class DataSources {
 		
 	public static final String EXTERNAL_IP = Tools.httpGet("http://checkip.amazonaws.com/").trim();
 	
-	public static String WEB_SERVICE_URL = "http://" + EXTERNAL_IP + ":" + SPARK_WEB_PORT + "/";
+	public static String WEB_SERVICE_EXTERNAL_URL = "http://" + EXTERNAL_IP + ":" + SPARK_WEB_PORT + "/";
+	
+	public static String WEB_SERVICE_INTERNAL_URL() {
+		String httpType = LocalWallet.INSTANCE.controller.getIsSSLEncrypted() ? "https:" : "http:";
+		return httpType + "//localhost:" + SPARK_WEB_PORT + "/";
+
+	}
 	
 	// The path to the bitmerchant dir
 	public static String HOME_DIR = System.getProperty( "user.home" ) + "/.bitmerchant";

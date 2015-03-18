@@ -61,7 +61,7 @@ public class WalletService {
 		get("/web_service_url", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			//			return lw.controller.getStatusProgress();
-			return DataSources.WEB_SERVICE_URL;
+			return DataSources.WEB_SERVICE_EXTERNAL_URL;
 
 		});
 		

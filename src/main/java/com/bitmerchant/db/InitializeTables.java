@@ -15,6 +15,7 @@ import com.bitmerchant.db.Tables.Currency;
 import com.bitmerchant.db.Tables.MerchantInfo;
 import com.bitmerchant.db.Tables.OrderStatus;
 import com.bitmerchant.tools.DataSources;
+import com.bitmerchant.tools.TableConstants;
 import com.bitmerchant.tools.Tools;
 
 public class InitializeTables {

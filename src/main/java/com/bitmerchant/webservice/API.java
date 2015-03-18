@@ -313,6 +313,8 @@ public class API {
 				PaymentActions.savePaymentToRow(payment, orderNum);
 
 				PaymentACK pa = PaymentActions.createPaymentAck(payment);
+				
+			
 
 				HttpServletResponse raw = res.raw();
 				pa.writeTo(raw.getOutputStream());
@@ -375,6 +377,24 @@ public class API {
 				Tools.dbClose();
 
 				return message;
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+		});
+		
+		post("/api/callbacktest", JSON_CONTENT_TYPE , (req, res) -> {
+			try {
+
+				Map<String, String> callbackData = Tools.createMapFromAjaxPost(req.body());
+				
+				log.info("You received a callback");
+				log.info(callbackData.toString());
+				
+				
+				return "callback successful";
 
 			} catch (NoSuchElementException e) {
 				res.status(666);

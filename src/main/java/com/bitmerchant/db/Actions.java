@@ -39,6 +39,7 @@ import com.bitmerchant.db.Tables.OrderView;
 import com.bitmerchant.db.Tables.Refund;
 import com.bitmerchant.tools.CurrencyConverter;
 import com.bitmerchant.tools.DataSources;
+import com.bitmerchant.tools.TableConstants;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.wallet.LocalWallet;
 import com.google.protobuf.ByteString;
@@ -176,9 +177,9 @@ public class Actions {
 			String code = null;
 			String buttonId = b.getId().toString();
 			if (type.equals("iframe")) {
-				code = "&lt;iframe name=&quot;" + buttonId + "&quot; src=&quot;" + DataSources.WEB_SERVICE_URL + "html/payment_iframe.html&quot; style=&quot;width: 460px; height: 450px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25); &quot; allowtransparency=&quot;true&quot; frameborder=&quot;0&quot; white-space=&quot;nowrap&quot;&gt;&lt;/iframe&gt;";
+				code = "&lt;iframe name=&quot;" + buttonId + "&quot; src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_iframe.html&quot; style=&quot;width: 460px; height: 450px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25); &quot; allowtransparency=&quot;true&quot; frameborder=&quot;0&quot; white-space=&quot;nowrap&quot;&gt;&lt;/iframe&gt;";
 			} else if (type.equals("button")) {
-				code =  "&lt;a name=&quot;" + buttonId + "&quot; class=&quot;bitmerchant-button ui-button ui-widget ui-corner-all ui-state-default ui-button-text-only&quot; href=&quot;" + DataSources.WEB_SERVICE_URL + "html/payment_iframe.html&quot; data-title=&quot;Purchase&quot; data-width=&quot;460&quot; data-height=&quot;450&quot;&gt;&lt;script src=&quot;" + DataSources.WEB_SERVICE_URL + "html/payment_button.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&lt;span class=&quot;ui-button-text&quot;&gt; Pay with Bitcoin &lt;/span&gt;&lt;/a&gt;";	
+				code =  "&lt;a name=&quot;" + buttonId + "&quot; class=&quot;bitmerchant-button ui-button ui-widget ui-corner-all ui-state-default ui-button-text-only&quot; href=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_iframe.html&quot; data-title=&quot;Purchase&quot; data-width=&quot;460&quot; data-height=&quot;450&quot;&gt;&lt;script src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_button.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&lt;span class=&quot;ui-button-text&quot;&gt; Pay with Bitcoin &lt;/span&gt;&lt;/a&gt;";	
 			}
 
 			return code;
@@ -241,7 +242,7 @@ public class Actions {
 
 
 			// needs to be left for later until the file is created
-			//			String paymentURL = DataSources.WEB_SERVICE_URL + "/payment_request/" + 
+			//			String paymentURL = DataSources.WEB_SERVICE_EXTERNAL_URL + "/payment_request/" + 
 			//					o.getId().toString() + ".bitcoinpaymentrequest";
 			//			o.set("payment_url", paymentURL);
 
@@ -364,7 +365,7 @@ public class Actions {
 			String id = o.getId().toString();
 
 
-			String paymentURL = DataSources.WEB_SERVICE_URL + "api/create_payment/" + id;
+			String paymentURL = DataSources.WEB_SERVICE_EXTERNAL_URL + "api/create_payment/" + id;
 			o.set("payment_url", paymentURL);
 
 			Address receiveAddr = bitcoin.wallet().freshReceiveAddress();
@@ -372,7 +373,7 @@ public class Actions {
 			BigDecimal btcAmount = BigDecimal.valueOf(o.getLong("total_satoshis"), 8);
 
 			String paymentRequestURL = "bitcoin:" + receiveAddr.toString() + "?" + 
-					"r=" + DataSources.WEB_SERVICE_URL + "payment_request/" + id + "&" + 
+					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL + "payment_request/" + id + "&" + 
 					"amount=" + btcAmount;
 			o.set("payment_request_url", paymentRequestURL);
 
@@ -508,6 +509,7 @@ public class Actions {
 
 
 		}
+		
 
 
 		// TODO finish some updates to the order row
@@ -608,7 +610,16 @@ public class Actions {
 						"script_bytes", sBytes);
 			}
 
-
+			// Send a test and a main callback to the callback url
+			String callbackURL = Button.findById(oRow.getString("button_id"))
+					.getString("callback_url");
+			if (callbackURL != null) {
+				String data = oRow.toJson(true);
+				Tools.sendCallback(callbackURL, data);
+				Tools.sendCallback(DataSources.WEB_SERVICE_INTERNAL_URL() + "api/callbacktest", data);
+			}
+			
+			
 
 		}
 

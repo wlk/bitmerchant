@@ -39,13 +39,13 @@ public class WebService {
 		// Add external web service url to beginning of javascript tools
 		Tools.addExternalWebServiceVarToTools();
 		
-		setPort(DataSources.SPARK_WEB_PORT) ;
+		setPort(DataSources.SPARK_WEB_PORT);
 		
 
 
 //		staticFileLocation("/web"); // Static files
 		//		staticFileLocation("/web/html"); // Static files
-				externalStaticFileLocation(DataSources.SOURCE_CODE_HOME+ "/web/");
+				externalStaticFileLocation(DataSources.SOURCE_CODE_HOME + "/web/");
 
 		// Set up the secure keystore
 	
@@ -80,7 +80,7 @@ public class WebService {
 				LocalWallet.INSTANCE.controller.setIsSSLEncrypted(true);
 				
 				// Change the spark web service URL
-				DataSources.WEB_SERVICE_URL = "https://" + domain + ":" + DataSources.SPARK_WEB_PORT + "/";
+				DataSources.WEB_SERVICE_EXTERNAL_URL = "https://" + domain + ":" + DataSources.SPARK_WEB_PORT + "/";
 				
 				
 				

@@ -1,4 +1,4 @@
-package com.bitmerchant.db;
+package com.bitmerchant.tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableMap;
 
 public class TableConstants {
 
-
+	public static final Integer EXPIRE_TIME = 3600;
 
 	public static final Map<String, String> CURRENCY_MAP = ImmutableMap.<String, String>builder()
 			.put("BTC", "Bitcoin")

@@ -40,6 +40,11 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
@@ -556,12 +561,21 @@ public class Tools {
 		return null;
 	}
 
-	public static void runSQLFile(Connection c,File sqlFile) throws SQLException, IOException {
-		Statement stmt = null;
-		stmt = c.createStatement();
-		String sql =Files.toString(sqlFile, Charset.defaultCharset());
-		stmt.executeUpdate(sql);
-		stmt.close();
+	public static void runSQLFile(Connection c,File sqlFile) {
+
+		try {
+			Statement stmt = null;
+			stmt = c.createStatement();
+			String sql;
+
+			sql = Files.toString(sqlFile, Charset.defaultCharset());
+
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch (IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static final void dbInit() {
@@ -599,11 +613,10 @@ public class Tools {
 	}
 
 	public static void addExternalWebServiceVarToTools() {
-		String externalSparkLine = "var externalSparkService ='" + DataSources.WEB_SERVICE_URL + "';";
+		String externalSparkLine = "var externalSparkService ='" + DataSources.WEB_SERVICE_EXTERNAL_URL + "';";
 
-		String internalSparkLine = LocalWallet.INSTANCE.controller.getIsSSLEncrypted() ? 
-				"var sparkService = 'https://localhost:4567/';" :
-					"var sparkService = 'http://localhost:4567/';";
+		String internalSparkLine = 
+				"var sparkService = '" + DataSources.WEB_SERVICE_INTERNAL_URL() + "';";
 		try {
 
 
@@ -695,7 +708,7 @@ public class Tools {
 					}
 				}
 			}
-			
+
 			zfile.close();
 
 
@@ -703,35 +716,56 @@ public class Tools {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void copy(InputStream in, OutputStream out) throws IOException {
-	    byte[] buffer = new byte[1024];
-	    while (true) {
-	      int readCount = in.read(buffer);
-	      if (readCount < 0) {
-	        break;
-	      }
-	      out.write(buffer, 0, readCount);
-	    }
-	  }
+		byte[] buffer = new byte[1024];
+		while (true) {
+			int readCount = in.read(buffer);
+			if (readCount < 0) {
+				break;
+			}
+			out.write(buffer, 0, readCount);
+		}
+	}
 
-	  private static void copy(File file, OutputStream out) throws IOException {
-	    InputStream in = new FileInputStream(file);
-	    try {
-	      copy(in, out);
-	    } finally {
-	      in.close();
-	    }
-	  }
+	private static void copy(File file, OutputStream out) throws IOException {
+		InputStream in = new FileInputStream(file);
+		try {
+			copy(in, out);
+		} finally {
+			in.close();
+		}
+	}
 
-	  private static void copy(InputStream in, File file) throws IOException {
-	    OutputStream out = new FileOutputStream(file);
-	    try {
-	      copy(in, out);
-	    } finally {
-	      out.close();
-	    }
-	  }
+	private static void copy(InputStream in, File file) throws IOException {
+		OutputStream out = new FileOutputStream(file);
+		try {
+			copy(in, out);
+		} finally {
+			out.close();
+		}
+	}
+	
+	public static void sendCallback(String url, String json) {
+		  HttpClient httpClient = HttpClientBuilder.create().build(); 
+
+		    try {
+		        HttpPost request = new HttpPost(url);
+		        StringEntity params = new StringEntity(json);
+		        request.addHeader("content-type", "application/x-www-form-urlencoded");
+		        request.setEntity(params);
+		        HttpResponse response = httpClient.execute(request);
+		        log.info("callback to " + url + " sent with data:" + json);
+		        // handle response here...
+		    } catch (Exception ex) {
+		    	 ex.printStackTrace();
+		        throw new NoSuchElementException(ex.getMessage());
+		       
+		    } finally {
+		    }
+	}
+	
+
 }
 
 
