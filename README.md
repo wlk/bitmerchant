@@ -28,7 +28,7 @@ For more information, head over to http://tchoulihan.github.io/bitmerchant/
 <img src="http://i.imgur.com/6QQ3kyN.png">
 
 ## Installation
-Download the jar, located [here](https://github.com/tchoulihan/bitmerchant/releases/download/v1.2/bitmerchant-shaded.jar)
+Download the jar, located [here](https://github.com/tchoulihan/bitmerchant/releases/download/1.3/bitmerchant-shaded.jar)
 
 And run the command:
 <pre>java -jar bitmerchant-shaded.jar [parameters]</pre>
