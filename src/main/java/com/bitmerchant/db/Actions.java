@@ -160,8 +160,7 @@ public class Actions {
   }
 
 }
-		 * @param jsonReq
-		 * @return 
+		 * @param root
 		 */
 		public static Button createButton(JsonNode root) {
 
@@ -196,11 +195,7 @@ public class Actions {
 
 	public static class OrderActions {
 
-		/**
-		 * This is a shortcut of 
-		 * @param root
-		 * @return
-		 */
+
 		public static Order createOrderObj(Integer buttonId, String customPrice) {
 
 			Button b = Button.findById(buttonId);
@@ -255,7 +250,6 @@ public class Actions {
 		/**
 		 * A combination of create button and create order
 		 * @param root
-		 * @return
 		 */
 		public static Order createOrderObj(JsonNode root) {
 			Button b = ButtonActions.createButtonObj(root);
@@ -637,7 +631,6 @@ public class Actions {
 		 * Sends a specific refund to the first refund address.
 		 * @param orderNum
 		 * @param amount
-		 * @return
 		 */
 		public static String sendRefund(Integer orderNum, Coin amount) {
 
