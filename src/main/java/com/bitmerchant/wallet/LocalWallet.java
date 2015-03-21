@@ -121,8 +121,38 @@ public class LocalWallet {
 		}
 	}
 	public static void main( String[] args ) {
-
 		new LocalWallet().doMain(args);
+	}
+
+	public static void startService(String homePath, String loglevel, 
+			Boolean testnet, Boolean deleteDB, Boolean startWebService) {
+
+		log.setLevel(Level.toLevel(loglevel));
+
+		// Set the correct directory
+		DataSources.HOME_DIR = homePath;
+
+		// get the correct network
+		params = (testnet) ? TestNet3Params.get() : MainNetParams.get();
+
+		DataSources.HOME_DIR = (testnet) ? DataSources.HOME_DIR  + "/testnet" : DataSources.HOME_DIR;
+
+		setupDirectories();
+
+		//		copyResourcesToHomeDir();
+
+		// Initialize the DB if it hasn't already
+		InitializeTables.init(deleteDB);
+
+		// Start the wallet
+		INSTANCE.init();
+
+		// Start the web service
+		if (startWebService) {
+			WebService.start(); 
+		}
+
+//		Tools.pollAndOpenStartPage();
 
 	}
 
@@ -137,7 +167,7 @@ public class LocalWallet {
 	}
 
 	public static void setupDirectories() {
-		log.info("Setting up ~/.bitmerchant dirs");
+		log.info("Setting up " + DataSources.HOME_DIR +" dirs");
 		new File(DataSources.HOME_DIR).mkdirs();
 	}
 
@@ -150,7 +180,7 @@ public class LocalWallet {
 				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE), Paths.get(DataSources.ZIP_FILE), 
 						StandardCopyOption.REPLACE_EXISTING);
 				zipFile = DataSources.SHADED_JAR_FILE;
-				
+
 			} else if (new File(DataSources.SHADED_JAR_FILE_2).exists()) {
 				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE_2), Paths.get(DataSources.ZIP_FILE),
 						StandardCopyOption.REPLACE_EXISTING);
