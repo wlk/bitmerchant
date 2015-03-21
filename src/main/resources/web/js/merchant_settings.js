@@ -3,7 +3,7 @@ var currenciesTemplate = null;
 $(document).ready(function() {
 
   // remove the ssl warning if necessary
-  getJson('ssl').done(function(isSSL) {
+  getJson('wallet/ssl').done(function(isSSL) {
     console.log(isSSL);
     if (isSSL == 'true') {
       console.log('hiding ssl warning');
@@ -54,7 +54,7 @@ $(document).ready(function() {
         var formData = $('#currency_form').serializeArray();
         console.log(formData);
 
-        standardFormPost('save_merchant_info', "#currency_form",
+        standardFormPost('wallet/save_merchant_info', "#currency_form",
           null, false, null, true, false);
       }, 1000);
 

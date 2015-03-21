@@ -90,7 +90,7 @@ function fillStatusText(url, divId) {
           clearInterval(intervalID);
           $('.sync-incomplete').fadeOut(1500);
           $('.wallet-btn').removeClass('disabled');
-          fillSimpleText('balance', '#balance');
+          fillSimpleText('wallet/balance', '#balance');
         }
       },
       error: function(request, status, error) {
@@ -117,7 +117,7 @@ function fillSendMoneyStatusText(url, divId) {
         if (data == "Success") {
           clearInterval(intervalID);
           $('.send-incomplete').fadeOut(1500);
-          fillSimpleText('balance', '#balance');
+          fillSimpleText('wallet/balance', '#balance');
         }
       },
       error: function(request, status, error) {

@@ -269,7 +269,7 @@ public class API {
 		});
 
 
-		get("/payment_request/:order",PAYMENTREQUEST_CONTENT_TYPE , (req, res) -> {
+		get("api/payment_request/:order",PAYMENTREQUEST_CONTENT_TYPE , (req, res) -> {
 			res.type(PAYMENTREQUEST_CONTENT_TYPE);
 			res.header("Content-Transfer-Encoding", "binary");
 			try {

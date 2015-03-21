@@ -19,12 +19,12 @@ public class WalletService {
 
 	public static void setup() {
 
-		get("/ssl", (req, res) -> {
+		get("/wallet/ssl", (req, res) -> {
 			
 			return LocalWallet.INSTANCE.controller.getIsSSLEncrypted();
 		});
 
-		post("/power_off", (req, res) -> {
+		post("/wallet/power_off", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 
@@ -38,7 +38,7 @@ public class WalletService {
 
 		});
 		
-		post("/restart", (req, res) -> {
+		post("/wallet/restart", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 
@@ -58,7 +58,7 @@ public class WalletService {
 			return "a yellow brick road";
 		});
 		
-		get("/web_service_url", (req, res) -> {
+		get("/wallet/web_service_url", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			//			return lw.controller.getStatusProgress();
 			return DataSources.WEB_SERVICE_EXTERNAL_URL;
@@ -66,29 +66,29 @@ public class WalletService {
 		});
 		
 		
-		get("/status_progress", (req, res) -> {
+		get("/wallet/status_progress", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			//			return lw.controller.getStatusProgress();
 			return LocalWallet.INSTANCE.controller.getStatusProgress();
 
 		});
 
-		get("/status_text", (req, res) -> {
+		get("/wallet/status_text", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getStatusText();
 		});
 
-		get("/receive_address", (req, res) -> {
+		get("/wallet/receive_address", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getAddressText();
 		});
 
-		get("/balance", (req, res) -> {
+		get("/wallet/balance", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getBalanceText();
 		});
 
-		get("/native_balance", (req, res) -> {
+		get("/wallet/native_balance", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			Tools.dbInit();
 			String balance = LocalWallet.INSTANCE.controller.getNativeBalance();
@@ -96,33 +96,33 @@ public class WalletService {
 			return balance;
 		});
 
-		get("/wallet_words", (req, res) -> {
+		get("/wallet/wallet_words", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getWalletWords();
 		});
 
-		get("/wallet_creation_date", (req, res) -> {
+		get("/wallet/wallet_creation_date", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getWalletCreationDateStr();
 		});
 
-		get("/wallet_is_encrypted", (req, res) -> {
+		get("/wallet/wallet_is_encrypted", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getWalletIsEncrypted();
 		});
-		get("/wallet_is_locked", (req, res) -> {
+		get("/wallet/wallet_is_locked", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getWalletIsLocked();
 		});
 
-		post("/set_wallet_password", (req, res) -> {
+		post("/wallet/set_wallet_password", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			String password = Tools.createMapFromAjaxPost(req.body()).get("password");
 			String message = LocalWallet.INSTANCE.controller.setWalletPassword(password);
 			return message;
 		});
 
-		post("/remove_wallet_password", (req, res) -> {
+		post("/wallet/remove_wallet_password", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 				String password = Tools.createMapFromAjaxPost(req.body()).get("password");
@@ -136,7 +136,7 @@ public class WalletService {
 			}
 		});
 
-		post("/unlock_wallet", (req, res) -> {
+		post("/wallet/unlock_wallet", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 				String password = Tools.createMapFromAjaxPost(req.body()).get("password");
@@ -151,7 +151,7 @@ public class WalletService {
 
 		});
 
-		post("/restore_wallet", (req, res) -> {
+		post("/wallet/restore_wallet", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 
@@ -171,7 +171,7 @@ public class WalletService {
 
 		});
 
-		post("/send_money", (req, res) -> {
+		post("/wallet/send_money", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 
@@ -192,7 +192,7 @@ public class WalletService {
 		});
 
 
-		post("/send_money_encrypted", (req, res) -> {
+		post("/wallet/send_money_encrypted", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 
@@ -214,12 +214,12 @@ public class WalletService {
 
 		});
 
-		get("/send_status", (req, res) -> {
+		get("/wallet/send_status", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			return LocalWallet.INSTANCE.controller.getSendStatus();
 		});
 
-		get("/get_transactions", (req, res) -> {
+		get("/wallet/get_transactions", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			Tools.dbInit();
 			String txs = LocalWallet.INSTANCE.controller.getTransactionsJSON();
@@ -228,7 +228,7 @@ public class WalletService {
 
 		});
 
-		get("/newest_received_tx", (req, res) -> {
+		get("/wallet/newest_received_tx", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			// use a cookie, not a return
 			//			res.cookie("newestReceivedTransaction", LocalWallet.instance.controller.getNewestReceivedTransaction(),
@@ -239,7 +239,7 @@ public class WalletService {
 		});
 
 
-		get("/merchant_info", (req, res) -> {
+		get("/wallet/merchant_info", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			Tools.dbInit();
 			MerchantInfoView mi = MerchantInfoView.findById(1);
@@ -248,7 +248,7 @@ public class WalletService {
 			return mi.toJson(false);
 		});
 
-		post("/save_merchant_info", (req, res) -> {
+		post("/wallet/save_merchant_info", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
 				Tools.dbInit();

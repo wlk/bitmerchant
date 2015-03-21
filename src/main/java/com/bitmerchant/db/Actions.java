@@ -367,7 +367,7 @@ public class Actions {
 			BigDecimal btcAmount = BigDecimal.valueOf(o.getLong("total_satoshis"), 8);
 
 			String paymentRequestURL = "bitcoin:" + receiveAddr.toString() + "?" + 
-					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL + "payment_request/" + id + "&" + 
+					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL + "api/payment_request/" + id + "&" + 
 					"amount=" + btcAmount;
 			o.set("payment_request_url", paymentRequestURL);
 

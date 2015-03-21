@@ -63,7 +63,7 @@ function walletDate() {
     format: 'yyyy-mm-dd'
   });
 
-  getJson('wallet_creation_date', true).done(function(result) {
+  getJson('wallet/wallet_creation_date', true).done(function(result) {
     $('.input-group.date').datepicker(
       'update', result);
     console.log(result);
@@ -71,7 +71,7 @@ function walletDate() {
 }
 
 function walletWords() {
-  getJson('wallet_words', true).done(function(result) {
+  getJson('wallet/wallet_words', true).done(function(result) {
     $('#wallet_words').html(result);
   }).error(function(result) {
 
@@ -84,7 +84,7 @@ function walletWords() {
 }
 
 function walletIsEncrypted() {
-  getJson('wallet_is_encrypted').done(function(result) {
+  getJson('wallet/wallet_is_encrypted').done(function(result) {
     console.log(result);
     if (result == 'true') {
       console.log("Wallet is encrypted");
@@ -102,7 +102,7 @@ function walletIsEncrypted() {
 }
 
 function walletIsLocked() {
-  getJson('wallet_is_locked').done(function(result) {
+  getJson('wallet/wallet_is_locked').done(function(result) {
     // Hide the class of things that need to be hidden
     if (result == 'true') {
       console.log("Wallet is locked");

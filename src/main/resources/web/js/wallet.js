@@ -7,9 +7,9 @@ $(document).ready(function() {
 
 
   setupSendForm();
-  fillStatusText('status_text', '#status_text');
+  fillStatusText('wallet/status_text', '#status_text');
 
-  fillProgressBar('status_progress', '#progress_bar');
+  fillProgressBar('wallet/status_progress', '#progress_bar');
 
   fillBalance();
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
   // have to only call this once :(
   transactionsTemplate = $('#transactions_template').html();
 
-  fetchReceivedTransactions('newest_received_tx', transactionsTemplate);
+  fetchReceivedTransactions('wallet/newest_received_tx', transactionsTemplate);
 
   transactionsTable(transactionsTemplate);
 
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 
 function pageTitle() {
-  getJson('merchant_info').done(function(result) {
+  getJson('wallet/merchant_info').done(function(result) {
     var mi = JSON.parse(result);
     var merchantName = mi['name'];
 
@@ -50,7 +50,7 @@ function pageTitle() {
 
 function qrCodeAndReceiveAddress() {
 
-  getJson('receive_address').done(function(result) {
+  getJson('wallet/receive_address').done(function(result) {
     var btcText = "bitcoin:" + result;
     $('#qrcode').html('');
     $('#qrcode').qrcode({
@@ -67,21 +67,21 @@ function qrCodeAndReceiveAddress() {
 function transactionsTable(templateHTML) {
 
   pageNumbers['#transactions_table'] = 1;
-  setupPagedTable('get_transactions', templateHTML, '#transactions', '#transactions_table');
+  setupPagedTable('wallet/get_transactions', templateHTML, '#transactions', '#transactions_table');
 
 }
 
 
 function sendStatus() {
 
-  fillSendMoneyStatusText('send_status', '#send_status');
+  fillSendMoneyStatusText('wallet/send_status', '#send_status');
   fillBalance();
   transactionsTable(transactionsTemplate);
 }
 
 function setupSendForm() {
 
-  getJson('wallet_is_encrypted').done(function(result) {
+  getJson('wallet/wallet_is_encrypted').done(function(result) {
     var isEncrypted = (result == 'true');
 
     if (isEncrypted) {
@@ -100,7 +100,7 @@ function setupSendForm() {
     })
     .on('success.form.bv', function(event) {
       event.preventDefault();
-      standardFormPost('send_money_encrypted', "#sendMoneyEncryptedForm",
+      standardFormPost('wallet/send_money_encrypted', "#sendMoneyEncryptedForm",
         "#sendEncryptedModal", false, sendStatus, false, true);
     
     });
@@ -112,7 +112,7 @@ function setupSendForm() {
     })
     .on('success.form.bv', function(event) {
       event.preventDefault();
-      standardFormPost('send_money', "#sendMoneyForm",
+      standardFormPost('wallet/send_money', "#sendMoneyForm",
         "#sendModal", false, sendStatus, false, true);
    
     });
@@ -218,7 +218,7 @@ function fetchReceivedTransactions(url, templateHTML) {
 
 
 function fillBalance() {
-  getJson('balance').done(function(result) {
+  getJson('wallet/balance').done(function(result) {
     // console.log(result);
     // convert to mBTC
     var btc = parseFloat(result).toFixed(8);
@@ -233,7 +233,7 @@ function fillBalance() {
     updateSendForm(btc);
   });
 
-  getJson('native_balance').done(function(result) {
+  getJson('wallet/native_balance').done(function(result) {
     $('#converted_balance').text(result);
   });
 

@@ -8,13 +8,13 @@ $(document).ready(function() {
 function powerStuff() {
 
   $("#power_off").click(function(event) {
-    simplePost('power_off', null, false, null, true, false);
+    simplePost('wallet/power_off', null, false, null, true, false);
     powerToast();
     event.preventDefault();
   });
 
   $("#restart").click(function(event) {
-    simplePost('restart', null, false, null, true, false);
+    simplePost('wallet/restart', null, false, null, true, false);
     restartToast();
     event.preventDefault();
   });
