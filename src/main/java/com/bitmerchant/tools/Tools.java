@@ -620,14 +620,14 @@ public class Tools {
 		try {
 
 
-			List<String> lines = java.nio.file.Files.readAllLines(Paths.get(DataSources.TOOLS_JS));
+			List<String> lines = java.nio.file.Files.readAllLines(Paths.get(DataSources.TOOLS_JS()));
 
 			lines.set(0,  internalSparkLine);
 			lines.set(1, externalSparkLine);
 
 
-			java.nio.file.Files.write(Paths.get(DataSources.TOOLS_JS), lines);
-			Files.touch(new File(DataSources.TOOLS_JS));
+			java.nio.file.Files.write(Paths.get(DataSources.TOOLS_JS()), lines);
+			Files.touch(new File(DataSources.TOOLS_JS()));
 
 
 		} catch (IOException e) {

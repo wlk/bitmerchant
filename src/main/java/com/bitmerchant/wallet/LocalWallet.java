@@ -177,12 +177,12 @@ public class LocalWallet {
 		String zipFile = null;
 		try {
 			if (new File(DataSources.SHADED_JAR_FILE).exists()) {
-				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE), Paths.get(DataSources.ZIP_FILE), 
+				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE), Paths.get(DataSources.ZIP_FILE()), 
 						StandardCopyOption.REPLACE_EXISTING);
 				zipFile = DataSources.SHADED_JAR_FILE;
 
 			} else if (new File(DataSources.SHADED_JAR_FILE_2).exists()) {
-				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE_2), Paths.get(DataSources.ZIP_FILE),
+				java.nio.file.Files.copy(Paths.get(DataSources.SHADED_JAR_FILE_2), Paths.get(DataSources.ZIP_FILE()),
 						StandardCopyOption.REPLACE_EXISTING);
 				zipFile = DataSources.SHADED_JAR_FILE_2;
 			}
@@ -190,7 +190,7 @@ public class LocalWallet {
 
 			e.printStackTrace();
 		}
-		Tools.unzip(new File(zipFile), new File(DataSources.SOURCE_CODE_HOME));
+		Tools.unzip(new File(zipFile), new File(DataSources.SOURCE_CODE_HOME()));
 		//		new Tools().copyJarResourcesRecursively("src", configHome);
 	}
 

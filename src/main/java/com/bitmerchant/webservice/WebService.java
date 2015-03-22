@@ -45,7 +45,7 @@ public class WebService {
 
 //		staticFileLocation("/web"); // Static files
 		//		staticFileLocation("/web/html"); // Static files
-				externalStaticFileLocation(DataSources.SOURCE_CODE_HOME + "/web/");
+				externalStaticFileLocation(DataSources.SOURCE_CODE_HOME() + "/web/");
 
 		// Set up the secure keystore
 	
@@ -68,15 +68,15 @@ public class WebService {
 	public static void setupSSL() {
 
 		try {
-			if (new File(DataSources.KEYSTORE_FILE).exists() && 
-					new File(DataSources.KEYSTORE_PASSWORD_FILE).exists() && 
-					new File(DataSources.KEYSTORE_DOMAIN_FILE).exists()) {
+			if (new File(DataSources.KEYSTORE_FILE()).exists() && 
+					new File(DataSources.KEYSTORE_PASSWORD_FILE()).exists() && 
+					new File(DataSources.KEYSTORE_DOMAIN_FILE()).exists()) {
 				
-				String pass = new String(Files.readAllBytes(Paths.get(DataSources.KEYSTORE_PASSWORD_FILE))).trim();
-				String domain = new String(Files.readAllBytes(Paths.get(DataSources.KEYSTORE_DOMAIN_FILE))).trim();
+				String pass = new String(Files.readAllBytes(Paths.get(DataSources.KEYSTORE_PASSWORD_FILE()))).trim();
+				String domain = new String(Files.readAllBytes(Paths.get(DataSources.KEYSTORE_DOMAIN_FILE()))).trim();
 	
-				log.info("keystore file = " + DataSources.KEYSTORE_FILE);
-				SparkBase.setSecure(DataSources.KEYSTORE_FILE, pass,null,null);
+				log.info("keystore file = " + DataSources.KEYSTORE_FILE());
+				SparkBase.setSecure(DataSources.KEYSTORE_FILE(), pass,null,null);
 				LocalWallet.INSTANCE.controller.setIsSSLEncrypted(true);
 				
 				// Change the spark web service URL
