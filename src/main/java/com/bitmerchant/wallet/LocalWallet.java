@@ -135,7 +135,7 @@ public class LocalWallet {
 		// get the correct network
 		params = (testnet) ? TestNet3Params.get() : MainNetParams.get();
 
-		DataSources.HOME_DIR = (testnet) ? DataSources.HOME_DIR  + "/testnet" : DataSources.HOME_DIR;
+//		DataSources.HOME_DIR = (testnet) ? DataSources.HOME_DIR  + "/testnet" : DataSources.HOME_DIR;
 
 		setupDirectories();
 
