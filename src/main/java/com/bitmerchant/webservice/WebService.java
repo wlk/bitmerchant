@@ -1,15 +1,13 @@
 package com.bitmerchant.webservice;
 
 import static spark.Spark.get;
-import static spark.SparkBase.setPort;
 import static spark.SparkBase.externalStaticFileLocation;
+import static spark.SparkBase.setPort;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import javax.activation.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

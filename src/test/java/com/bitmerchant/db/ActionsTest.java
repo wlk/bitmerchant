@@ -9,11 +9,11 @@ import org.junit.Before;
 import com.bitmerchant.db.Actions.ButtonActions;
 import com.bitmerchant.db.Actions.OrderActions;
 import com.bitmerchant.db.Actions.PaymentActions;
-import com.bitmerchant.db.Tables.Button;
-import com.bitmerchant.db.Tables.Order;
+
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.wallet.LocalWallet;
+import static com.bitmerchant.db.Tables.*;
 public class ActionsTest extends TestCase {
 
 

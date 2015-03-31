@@ -7,9 +7,10 @@ import org.bitcoin.protocols.payments.Protos.PaymentRequest;
 import org.junit.Before;
 
 import com.bitmerchant.db.Actions.OrderActions;
-import com.bitmerchant.db.Tables.Order;
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.Tools;
+
+import static com.bitmerchant.db.Tables.*;
 
 public class PaymentToolsTest extends TestCase {
 	

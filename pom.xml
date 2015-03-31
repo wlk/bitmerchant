@@ -4,7 +4,7 @@
 	<groupId>com.github.tchoulihan</groupId>
 	<artifactId>bitmerchant</artifactId>
 	<packaging>jar</packaging>
-	<version>1.3.11-SNAPSHOT</version>
+	<version>1.3.15-SNAPSHOT</version>
 	<name>bitmerchant-wallet</name>
 	<url>http://maven.apache.org</url>
 
@@ -28,21 +28,16 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<!-- <parent> -->
-	<!-- <groupId>org.sonatype.oss</groupId> -->
-	<!-- <artifactId>oss-parent</artifactId> -->
-	<!-- <version>7</version> -->
-	<!-- </parent> -->
 
 	<parent>
-		<groupId>com.openmarket</groupId>
-		<artifactId>openmarket</artifactId>
-		<version>1.1-SNAPSHOT</version>
+	<groupId>org.sonatype.oss</groupId>
+	<artifactId>oss-parent</artifactId>
+	<version>7</version>
 	</parent>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<activejdbc.version>1.4.10</activejdbc.version>
 		<version>0.0.1</version>
 	</properties>
 
@@ -211,55 +206,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.javalite</groupId>
-				<artifactId>activejdbc-instrumentation</artifactId>
-				<version>${activejdbc.version}</version>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>instrument</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
+			
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's cjsononfiguration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.javalite</groupId>
-										<artifactId>
-											activejdbc-instrumentation
-										</artifactId>
-										<versionRange>
-											[1.4.9,)
-										</versionRange>
-										<goals>
-											<goal>instrument</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		
 
 
 
@@ -279,7 +228,19 @@
 	</distributionManagement>
 
 	<dependencies>
-
+	
+	<dependency>
+			<groupId>org.javalite</groupId>
+			<artifactId>activejdbc</artifactId>
+			<version>1.4.12-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>opensymphony</groupId>
+					<artifactId>oscache</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -320,17 +281,7 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.7.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.javalite</groupId>
-			<artifactId>activejdbc</artifactId>
-			<version>${activejdbc.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>opensymphony</groupId>
-					<artifactId>oscache</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>

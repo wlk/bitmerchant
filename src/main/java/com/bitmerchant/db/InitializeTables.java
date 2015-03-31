@@ -18,6 +18,8 @@ import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.TableConstants;
 import com.bitmerchant.tools.Tools;
 
+import static com.bitmerchant.db.Tables.*;
+
 public class InitializeTables {
 	public static Boolean DELETE;
 	public static Boolean FIRST_FILL = true;

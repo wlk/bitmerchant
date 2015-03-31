@@ -2,8 +2,6 @@ package com.bitmerchant.wallet;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.JarURLConnection;
-import java.net.URLConnection;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -18,7 +16,6 @@ import org.bitcoinj.wallet.DeterministicSeed;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Level;
@@ -28,7 +25,6 @@ import com.bitmerchant.db.InitializeTables;
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.webservice.WebService;
-import com.google.common.io.Files;
 
 
 /**

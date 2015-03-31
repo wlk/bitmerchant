@@ -57,6 +57,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.type.TypeReference;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.DBException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -163,26 +164,7 @@ public class Tools {
 	}
 
 
-	public static List<Map<String, String>> convertTransactionsToLOM(List<Transaction> transactions) {
-		List<Map<String, String>> lom = new ArrayList<Map<String,String>>();
 
-		// Get all the orders at once
-		List<OrderView> ovs = OrderView.findAll();
-
-		// create a map from order hash to order number
-		Map<String, OrderView> orderHashToOrderMap = orderHashToOrderMap(ovs);
-
-		for (Transaction cT : transactions) {
-			String txHash = cT.getHashAsString();			
-			OrderActions.updateOrderFromTransactionReceived(cT);
-			OrderView ov = (orderHashToOrderMap.get(txHash) != null) ? orderHashToOrderMap.get(txHash) : null;
-			Map<String, String> tMap = convertTransactionToMap(cT, ov);
-			lom.add(tMap);
-
-		}
-
-		return lom;
-	}
 
 	public static Map<String, OrderView> orderHashToOrderMap(List<OrderView> ovs) {
 		Map<String, OrderView> orderHashToIdMap = new HashMap<String, OrderView>();
@@ -580,7 +562,7 @@ public class Tools {
 
 	public static final void dbInit() {
 		try {
-			Base.open("org.sqlite.JDBC", "jdbc:sqlite:" + DataSources.DB_FILE(), "root", "p@ssw0rd");
+			new DB("bitmerchant").open("org.sqlite.JDBC", "jdbc:sqlite:" + DataSources.DB_FILE(), "root", "p@ssw0rd");
 		} catch (DBException e) {
 			dbClose();
 			dbInit();
@@ -589,7 +571,7 @@ public class Tools {
 	}
 
 	public static final void dbClose() {
-		Base.close();
+		new DB("bitmerchant").close();
 	}
 
 	public static void restartApplication() throws URISyntaxException, IOException

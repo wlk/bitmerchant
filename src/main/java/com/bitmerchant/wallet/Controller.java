@@ -51,6 +51,8 @@ import com.google.common.util.concurrent.Service;
 import com.google.protobuf.ByteString;
 import com.subgraph.orchid.TorClient;
 import com.subgraph.orchid.TorInitializationListener;
+
+import static com.bitmerchant.db.Tables.*;
 public class Controller {
 
 	static final Logger log = LoggerFactory.getLogger(Controller.class);
@@ -438,7 +440,7 @@ public class Controller {
 		
 		List<Transaction> transactions = bitcoin.wallet().getTransactionsByTime();
 
-		return Tools.convertLOMtoJson(Tools.convertTransactionsToLOM(transactions));
+		return Tools.convertLOMtoJson(OrderActions.convertTransactionsToLOM(transactions));
 	}
 
 	public String getNewestReceivedTransaction() {

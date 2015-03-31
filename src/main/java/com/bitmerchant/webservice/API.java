@@ -19,9 +19,10 @@ import com.bitmerchant.db.Actions;
 import com.bitmerchant.db.Actions.OrderActions;
 import com.bitmerchant.db.Actions.PaymentActions;
 import com.bitmerchant.db.Tables.Button;
-import com.bitmerchant.db.Tables.Order;
-import com.bitmerchant.db.Tables.OrderView;
 import com.bitmerchant.tools.Tools;
+
+import static com.bitmerchant.db.Tables.Order;
+import static com.bitmerchant.db.Tables.OrderView;
 
 
 public class API {

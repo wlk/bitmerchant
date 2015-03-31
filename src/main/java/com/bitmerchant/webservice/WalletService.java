@@ -7,10 +7,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.bitmerchant.db.Actions;
-import com.bitmerchant.db.Tables.MerchantInfoView;
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.wallet.LocalWallet;
+
+import static com.bitmerchant.db.Tables.MerchantInfoView;
 
 public class WalletService {
 

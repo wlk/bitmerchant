@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bitcoin.protocols.payments.Protos.Output;
 import org.bitcoin.protocols.payments.Protos.Payment;
@@ -43,6 +45,8 @@ import com.bitmerchant.tools.TableConstants;
 import com.bitmerchant.tools.Tools;
 import com.bitmerchant.wallet.LocalWallet;
 import com.google.protobuf.ByteString;
+
+import static com.bitmerchant.db.Tables.*;
 
 public class Actions {
 
@@ -502,6 +506,27 @@ public class Actions {
 
 
 
+		}
+		
+		public static List<Map<String, String>> convertTransactionsToLOM(List<Transaction> transactions) {
+			List<Map<String, String>> lom = new ArrayList<Map<String,String>>();
+
+			// Get all the orders at once
+			List<OrderView> ovs = OrderView.findAll();
+
+			// create a map from order hash to order number
+			Map<String, OrderView> orderHashToOrderMap = Tools.orderHashToOrderMap(ovs);
+
+			for (Transaction cT : transactions) {
+				String txHash = cT.getHashAsString();			
+				OrderActions.updateOrderFromTransactionReceived(cT);
+				OrderView ov = (orderHashToOrderMap.get(txHash) != null) ? orderHashToOrderMap.get(txHash) : null;
+				Map<String, String> tMap = Tools.convertTransactionToMap(cT, ov);
+				lom.add(tMap);
+
+			}
+
+			return lom;
 		}
 		
 
