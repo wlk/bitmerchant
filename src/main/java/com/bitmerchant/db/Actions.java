@@ -1,5 +1,17 @@
 package com.bitmerchant.db;
 
+
+
+import static com.bitmerchant.db.Tables.Button;
+import static com.bitmerchant.db.Tables.ButtonStyle;
+import static com.bitmerchant.db.Tables.ButtonType;
+import static com.bitmerchant.db.Tables.ButtonView;
+import static com.bitmerchant.db.Tables.Currency;
+import static com.bitmerchant.db.Tables.MerchantInfo;
+import static com.bitmerchant.db.Tables.Order;
+import static com.bitmerchant.db.Tables.OrderStatus;
+import static com.bitmerchant.db.Tables.OrderView;
+import static com.bitmerchant.db.Tables.Refund;
 import static com.bitmerchant.wallet.LocalWallet.bitcoin;
 
 import java.io.File;
@@ -29,16 +41,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bitmerchant.db.Tables.Button;
-import com.bitmerchant.db.Tables.ButtonStyle;
-import com.bitmerchant.db.Tables.ButtonType;
-import com.bitmerchant.db.Tables.ButtonView;
-import com.bitmerchant.db.Tables.Currency;
-import com.bitmerchant.db.Tables.MerchantInfo;
-import com.bitmerchant.db.Tables.Order;
-import com.bitmerchant.db.Tables.OrderStatus;
-import com.bitmerchant.db.Tables.OrderView;
-import com.bitmerchant.db.Tables.Refund;
+
 import com.bitmerchant.tools.CurrencyConverter;
 import com.bitmerchant.tools.DataSources;
 import com.bitmerchant.tools.TableConstants;
@@ -46,7 +49,6 @@ import com.bitmerchant.tools.Tools;
 import com.bitmerchant.wallet.LocalWallet;
 import com.google.protobuf.ByteString;
 
-import static com.bitmerchant.db.Tables.*;
 
 public class Actions {
 
@@ -180,9 +182,9 @@ public class Actions {
 			String code = null;
 			String buttonId = b.getId().toString();
 			if (type.equals("iframe")) {
-				code = "&lt;iframe name=&quot;" + buttonId + "&quot; src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_iframe.html&quot; style=&quot;width: 460px; height: 450px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25); &quot; allowtransparency=&quot;true&quot; frameborder=&quot;0&quot; white-space=&quot;nowrap&quot;&gt;&lt;/iframe&gt;";
+				code = "&lt;iframe name=&quot;" + buttonId + "&quot; src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "html/payment_iframe.html&quot; style=&quot;width: 460px; height: 450px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25); &quot; allowtransparency=&quot;true&quot; frameborder=&quot;0&quot; white-space=&quot;nowrap&quot;&gt;&lt;/iframe&gt;";
 			} else if (type.equals("button")) {
-				code =  "&lt;a name=&quot;" + buttonId + "&quot; class=&quot;bitmerchant-button ui-button ui-widget ui-corner-all ui-state-default ui-button-text-only&quot; href=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_iframe.html&quot; data-title=&quot;Purchase&quot; data-width=&quot;460&quot; data-height=&quot;450&quot;&gt;&lt;script src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL + "html/payment_button.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&lt;span class=&quot;ui-button-text&quot;&gt; Pay with Bitcoin &lt;/span&gt;&lt;/a&gt;";	
+				code =  "&lt;a name=&quot;" + buttonId + "&quot; class=&quot;bitmerchant-button ui-button ui-widget ui-corner-all ui-state-default ui-button-text-only&quot; href=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "html/payment_iframe.html&quot; data-title=&quot;Purchase&quot; data-width=&quot;460&quot; data-height=&quot;450&quot;&gt;&lt;script src=&quot;" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "html/payment_button.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&lt;span class=&quot;ui-button-text&quot;&gt; Pay with Bitcoin &lt;/span&gt;&lt;/a&gt;";	
 			}
 
 			return code;
@@ -363,7 +365,7 @@ public class Actions {
 			String id = o.getId().toString();
 
 
-			String paymentURL = DataSources.WEB_SERVICE_EXTERNAL_URL + "api/create_payment/" + id;
+			String paymentURL = DataSources.WEB_SERVICE_EXTERNAL_URL() + "api/create_payment/" + id;
 			o.set("payment_url", paymentURL);
 
 			Address receiveAddr = bitcoin.wallet().freshReceiveAddress();
@@ -371,7 +373,7 @@ public class Actions {
 			BigDecimal btcAmount = BigDecimal.valueOf(o.getLong("total_satoshis"), 8);
 
 			String paymentRequestURL = "bitcoin:" + receiveAddr.toString() + "?" + 
-					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL + "api/payment_request/" + id + "&" + 
+					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "api/payment_request/" + id + "&" + 
 					"amount=" + btcAmount;
 			o.set("payment_request_url", paymentRequestURL);
 

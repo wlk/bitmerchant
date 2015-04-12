@@ -78,7 +78,7 @@ public class WebService {
 				LocalWallet.INSTANCE.controller.setIsSSLEncrypted(true);
 				
 				// Change the spark web service URL
-				DataSources.WEB_SERVICE_EXTERNAL_URL = "https://" + domain + ":" + DataSources.SPARK_WEB_PORT + "/";
+				DataSources.DOMAIN = domain;
 				
 				
 				

@@ -3,6 +3,7 @@ package com.bitmerchant.tools;
 import com.bitmerchant.wallet.LocalWallet;
 
 
+
 public class DataSources {
 
 	public static String APP_NAME = "bitmerchant";
@@ -10,17 +11,26 @@ public class DataSources {
 	
 	
 	public static final Integer SPARK_WEB_PORT = 4567;
-		
-	public static final String EXTERNAL_IP = Tools.httpGet("http://checkip.amazonaws.com/").trim();
 	
-	public static String WEB_SERVICE_EXTERNAL_URL = "http://" + EXTERNAL_IP + ":" + SPARK_WEB_PORT + "/";
-	
-	public static String WEB_SERVICE_INTERNAL_URL() {
-		String httpType = LocalWallet.INSTANCE.controller.getIsSSLEncrypted() ? "https:" : "http:";
-		return httpType + "//localhost:" + SPARK_WEB_PORT + "/";
+	public static String HTTP() {return LocalWallet.INSTANCE.controller.getIsSSLEncrypted() ? "https://" : "http://";}
 
+	public static String EXTERNAL_IP = Tools.httpGet("http://api.ipify.org/").trim();
+
+
+	public static String WEB_SERVICE_EXTERNAL_URL() {
+		if (DOMAIN == null) {
+			return  HTTP() + EXTERNAL_IP + ":" + SPARK_WEB_PORT + "/";
+		} else {
+			return HTTP() + DOMAIN + ":" + DataSources.SPARK_WEB_PORT + "/";
+		}
+	}
+
+	public static String WEB_SERVICE_INTERNAL_URL() {
+		return HTTP() + "localhost:" + SPARK_WEB_PORT + "/";
 	}
 	
+	public static String DOMAIN = null;
+
 	// The path to the bitmerchant dir
 	public static String HOME_DIR = System.getProperty( "user.home" ) + "/.bitmerchant";
 	

@@ -8,14 +8,13 @@ public class Tables {
 	
 	@DbName("bitmerchant")
 	@Table("orders") 
-	public static class Order extends Model {}
+	public static class Order extends Model {};
 	public static Order Order = new Order();
 	
 	@DbName("bitmerchant")
 	@Table("orders_view") 
 	public static class OrderView extends Model {}
-	public static OrderView OrderView = new OrderView();
-	
+	public static OrderView OrderView = new OrderView();	
 	
 	@DbName("bitmerchant")
 	@Table("order_statuses") 

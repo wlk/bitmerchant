@@ -30,9 +30,9 @@
 
 
 	<parent>
-	<groupId>org.sonatype.oss</groupId>
-	<artifactId>oss-parent</artifactId>
-	<version>7</version>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
 	</parent>
 
 
@@ -206,9 +206,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
-		
+
 
 
 
@@ -228,8 +228,8 @@
 	</distributionManagement>
 
 	<dependencies>
-	
-	<dependency>
+
+		<dependency>
 			<groupId>org.javalite</groupId>
 			<artifactId>activejdbc</artifactId>
 			<version>1.4.12-SNAPSHOT</version>
@@ -240,7 +240,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>

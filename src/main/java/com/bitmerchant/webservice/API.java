@@ -185,7 +185,7 @@ public class API {
 			res.type(JSON_CONTENT_TYPE);
 			try {
 
-				Tools.allowOnlyLocalHeaders(req, res);
+//				Tools.allowOnlyLocalHeaders(req, res);
 				Tools.dbInit();
 
 				// Creates the order and the button from the req body

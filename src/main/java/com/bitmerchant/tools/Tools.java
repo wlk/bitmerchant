@@ -595,7 +595,7 @@ public class Tools {
 	}
 
 	public static void addExternalWebServiceVarToTools() {
-		String externalSparkLine = "var externalSparkService ='" + DataSources.WEB_SERVICE_EXTERNAL_URL + "';";
+		String externalSparkLine = "var externalSparkService ='" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "';";
 
 		String internalSparkLine = 
 				"var sparkService = '" + DataSources.WEB_SERVICE_INTERNAL_URL() + "';";
