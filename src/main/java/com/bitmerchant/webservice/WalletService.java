@@ -21,7 +21,7 @@ public class WalletService {
 	public static void setup() {
 
 		get("/wallet/ssl", (req, res) -> {
-			
+
 			return LocalWallet.INSTANCE.controller.getIsSSLEncrypted();
 		});
 
@@ -38,7 +38,7 @@ public class WalletService {
 			}
 
 		});
-		
+
 		post("/wallet/restart", (req, res) -> {
 			try {
 				Tools.allowOnlyLocalHeaders(req, res);
@@ -58,25 +58,35 @@ public class WalletService {
 			res.redirect("wallet");
 			return "a yellow brick road";
 		});
-		
+
 		get("/wallet/web_service_url", (req, res) -> {
 			Tools.allowOnlyLocalHeaders(req, res);
 			//			return lw.controller.getStatusProgress();
 			return DataSources.WEB_SERVICE_EXTERNAL_URL();
 
 		});
-		
-		
+
+
 		get("/wallet/status_progress", (req, res) -> {
-			Tools.allowOnlyLocalHeaders(req, res);
-			//			return lw.controller.getStatusProgress();
-			return LocalWallet.INSTANCE.controller.getStatusProgress();
+			try {
+				Tools.allowOnlyLocalHeaders(req, res);
+				//			return lw.controller.getStatusProgress();
+				return LocalWallet.INSTANCE.controller.getStatusProgress();
+			} catch (Exception e) {
+				res.status(666);
+				return e.getMessage();
+			}
 
 		});
 
 		get("/wallet/status_text", (req, res) -> {
-			Tools.allowOnlyLocalHeaders(req, res);
-			return LocalWallet.INSTANCE.controller.getStatusText();
+			try {
+				Tools.allowOnlyLocalHeaders(req, res);
+				return LocalWallet.INSTANCE.controller.getStatusText();
+			} catch (Exception e) {
+				res.status(666);
+				return e.getMessage();
+			}
 		});
 
 		get("/wallet/receive_address", (req, res) -> {
@@ -230,13 +240,18 @@ public class WalletService {
 		});
 
 		get("/wallet/newest_received_tx", (req, res) -> {
-			Tools.allowOnlyLocalHeaders(req, res);
-			// use a cookie, not a return
-			//			res.cookie("newestReceivedTransaction", LocalWallet.instance.controller.getNewestReceivedTransaction(),
-			//					COOKIE_EXPIRE_SECONDS, true);
-			res.cookie("newestReceivedTransaction", LocalWallet.INSTANCE.controller.getNewestReceivedTransactionHash(),
-					COOKIE_EXPIRE_SECONDS);
-			return LocalWallet.INSTANCE.controller.getNewestReceivedTransaction();
+			try {
+				Tools.allowOnlyLocalHeaders(req, res);
+				// use a cookie, not a return
+				//			res.cookie("newestReceivedTransaction", LocalWallet.instance.controller.getNewestReceivedTransaction(),
+				//					COOKIE_EXPIRE_SECONDS, true);
+				res.cookie("newestReceivedTransaction", LocalWallet.INSTANCE.controller.getNewestReceivedTransactionHash(),
+						COOKIE_EXPIRE_SECONDS);
+				return LocalWallet.INSTANCE.controller.getNewestReceivedTransaction();
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
 		});
 
 
