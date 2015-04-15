@@ -493,7 +493,7 @@ public class Actions {
 
 					Order o = Order.findFirst("receive_address=?", txReceive);
 
-					if (o != null && o.getString("transaction_hash") != null) {
+					if (o != null && o.getString("transaction_hash") == null) {
 						// Found it! now update the row
 						log.info("Associating order #" + o.getId() + " with tx " +  tx.getHashAsString());
 						o.set("transaction_hash", tx.getHashAsString());
