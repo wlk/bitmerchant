@@ -90,7 +90,7 @@ public class Tools {
 	public static void allowOnlyLocalHeaders(Request req, Response res) {
 
 
-		log.info("req ip = " + req.ip());
+		log.debug("req ip = " + req.ip());
 
 
 		//		res.header("Access-Control-Allow-Origin", "http://mozilla.com");
