@@ -501,7 +501,7 @@ public class Actions {
 						log.debug("order value = " + o.getInteger("total_satoshis"));
 						o.set("status_id", TableConstants.ORDER_STATUSES.indexOf("completed")+1);
 						log.debug("order status set to completed");
-						
+						sendCallbackForOrder(o);
 						o.saveIt();
 					}
 				}
@@ -525,7 +525,7 @@ public class Actions {
 			Map<String, OrderView> orderHashToOrderMap = Tools.orderHashToOrderMap(ovs);
 
 			for (Transaction cT : transactions) {
-				String txHash = cT.getHashAsString();			
+				String txHash = cT.getHashAsString();
 				OrderActions.updateOrderFromTransactionReceived(cT);
 				OrderView ov = (orderHashToOrderMap.get(txHash) != null) ? orderHashToOrderMap.get(txHash) : null;
 				Map<String, String> tMap = Tools.convertTransactionToMap(cT, ov);
@@ -534,6 +534,17 @@ public class Actions {
 			}
 
 			return lom;
+		}
+		
+		public static void sendCallbackForOrder(Order oRow) {
+			// Send a test and a main callback to the callback url
+			String callbackURL = Button.findById(oRow.getString("button_id"))
+					.getString("callback_url");
+			if (callbackURL != null) {
+				String data = oRow.toJson(true);
+				Tools.sendCallback(callbackURL, data);
+				Tools.sendCallback(DataSources.WEB_SERVICE_INTERNAL_URL() + "api/callbacktest", data);
+			}
 		}
 		
 
@@ -636,18 +647,15 @@ public class Actions {
 						"script_bytes", sBytes);
 			}
 
-			// Send a test and a main callback to the callback url
-			String callbackURL = Button.findById(oRow.getString("button_id"))
-					.getString("callback_url");
-			if (callbackURL != null) {
-				String data = oRow.toJson(true);
-				Tools.sendCallback(callbackURL, data);
-				Tools.sendCallback(DataSources.WEB_SERVICE_INTERNAL_URL() + "api/callbacktest", data);
-			}
+			OrderActions.sendCallbackForOrder(oRow);
 			
 			
 
 		}
+
+
+
+		
 
 		public static PaymentACK createPaymentAck(Payment payment) {
 			PaymentACK.Builder paB = PaymentACK.newBuilder();
