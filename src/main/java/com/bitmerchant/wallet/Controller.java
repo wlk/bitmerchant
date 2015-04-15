@@ -133,7 +133,9 @@ public class Controller {
 				// Since the payment_url unfortunately requires SSL
 				
 				// This is necessary to update the received orders with the correct status = completed
+				Tools.dbInit();
 				getTransactionsJSON();
+				Tools.dbClose();
 			}
 		});
 
