@@ -372,9 +372,12 @@ public class Actions {
 			o.set("receive_address", receiveAddr.toString());
 			BigDecimal btcAmount = BigDecimal.valueOf(o.getLong("total_satoshis"), 8);
 
+			
+			
 			String paymentRequestURL = "bitcoin:" + receiveAddr.toString() + "?" + 
 					"r=" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "api/payment_request/" + id + "&" + 
 					"amount=" + btcAmount;
+//			String paymentRequestURL = "bitcoin:?r=" + DataSources.WEB_SERVICE_EXTERNAL_URL() + "api/payment_request/" + id;
 			o.set("payment_request_url", paymentRequestURL);
 
 			// Set the network on the button
