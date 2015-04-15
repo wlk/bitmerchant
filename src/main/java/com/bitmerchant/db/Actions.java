@@ -274,7 +274,7 @@ public class Actions {
 		public static String showOrder(Integer id) {
 
 			OrderView ov = OrderView.findById(id);
-
+			
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectNode a = mapper.createObjectNode();
 
@@ -499,7 +499,9 @@ public class Actions {
 						o.set("transaction_hash", tx.getHashAsString());
 						log.debug("tx value = " + tx.getValue(bitcoin.wallet()));
 						log.debug("order value = " + o.getInteger("total_satoshis"));
-
+						o.set("status_id", TableConstants.ORDER_STATUSES.indexOf("completed")+1);
+						log.debug("order status set to completed");
+						
 						o.saveIt();
 					}
 				}

@@ -131,6 +131,9 @@ public class Controller {
 
 				// TODO for now, just associate the send addresses with the orders
 				// Since the payment_url unfortunately requires SSL
+				
+				// This is necessary to update the received orders with the correct status = completed
+				getTransactionsJSON();
 			}
 		});
 
