@@ -10,7 +10,7 @@ public class DataSources {
 	
 	
 	
-	public static final Integer SPARK_WEB_PORT = 4567;
+	public static Integer SPARK_WEB_PORT = 4567;
 	
 	public static String HTTP() {return LocalWallet.INSTANCE.controller.getIsSSLEncrypted() ? "https://" : "http://";}
 
@@ -21,7 +21,7 @@ public class DataSources {
 		if (DOMAIN == null) {
 			return  HTTP() + EXTERNAL_IP + ":" + SPARK_WEB_PORT + "/";
 		} else {
-			return HTTP() + DOMAIN + ":" + DataSources.SPARK_WEB_PORT + "/";
+			return HTTP() + DOMAIN + ":" + SPARK_WEB_PORT + "/";
 		}
 	}
 
