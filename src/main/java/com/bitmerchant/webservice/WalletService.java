@@ -3,6 +3,7 @@ package com.bitmerchant.webservice;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -161,6 +162,21 @@ public class WalletService {
 			}
 
 		});
+		
+		post("/wallet/unlock_wallet/:password", (req, res) -> {
+			try {
+				Tools.allowOnlyLocalHeaders(req, res);
+				String password = req.params(":password");
+				String message = LocalWallet.INSTANCE.controller.unlockWallet(password);
+
+				return message;
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+		});
 
 		post("/wallet/restore_wallet", (req, res) -> {
 			try {
@@ -196,6 +212,29 @@ public class WalletService {
 				return message;
 
 			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+		});
+		
+		post("/wallet/send_money/:sendAmount/:toAddress", (req, res) -> {
+			try {
+				Tools.allowOnlyLocalHeaders(req, res);
+		
+				String amount = req.params(":sendAmount");
+				amount = java.net.URLDecoder.decode(amount, "UTF-8");
+				
+				String toAddress = req.params(":toAddress");
+				
+				
+				
+				
+				String message = LocalWallet.INSTANCE.controller.sendMoney(amount, toAddress);
+
+				return message;
+
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				res.status(666);
 				return e.getMessage();
 			}

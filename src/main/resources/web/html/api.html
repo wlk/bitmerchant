@@ -56,66 +56,68 @@
     <div id="wrapper">
 
         <!-- header -->
-        <nav class="navbar navbar-default navbar-top" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">BitMerchant</a>
-                </div>
+          <nav class="navbar navbar-default navbar-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">BitMerchant</a>
+        </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/about">About</a>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/about">About</a>
             </li>
             <li><a href="/wallet">Wallet</a>
             </li>
-                        <li><a href="/api">API</a>
-                        </li>
-                        <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/about">About BitMerchant</a>
-                                </li>
-                                <li><a href="/contact">API Reference</a>
-                                </li>
-                                <li><a href="/FAQ">Frequently Asked Questions</a>
-                                </li>
-                                <li><a href="/contact">Github</a>
-                                </li>
-                                <li><a href="https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant">Bounty Source</a>
-                                </li>
-                                <li><a href="/contact">Bugs/Feature requests</a>
-                                </li>
-                                <li><a href="https://github.com/tchoulihan/bitmerchant">Contact</a>
-                                </li>
+            <li><a href="/api">API</a>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/api.html">API Reference</a>
+                </li>
+                <li><a href="/FAQ">Frequently Asked Questions</a>
+                </li>
+                <li><a href="https://github.com/tchoulihan/bitmerchant">Github</a>
+                </li>
+                <li><a href="https://www.bountysource.com/trackers/9805417-tchoulihan-bitmerchant">Bounty Source</a>
+                </li>
+                <li><a href="https://github.com/tchoulihan/bitmerchant">Bugs/Feature requests</a>
+                </li>
+                <li><a href="https://github.com/tchoulihan/bitmerchant">Contact</a>
+                </li>
 
 
-                            </ul>
-                        </li>
-                    </ul>
-                    <form id="creator_search" class="navbar-form navbar-right navbar-input-group" role="search">
-                        <div class="form-group">
-                            <input name="search_input" type="text" class="form-control typeahead" placeholder="Search API...">
-                        </div>
-                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i>
-                        </button>
-                    </form>
+              </ul>
+            </li>
+          </ul>
+          <div id="power" class="navbar-right">
+            <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a> -->
+            <button type="submit" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-power-off fa-2x"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+              <li><a href="" id="power_off">Power off</a>
+              </li>
+              <li><a href="" id="restart">Restart</a>
+              </li>
+            </ul>
+          </div>
 
 
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </nav>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
 
 
 
@@ -182,6 +184,24 @@
                         </ul>
                         <ul class="nav nav-stacked">
                             <li><a href="#refund_an_order" class="text-overflow">Refund an order</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#wallet" class="text-overflow">Wallet Actions</a>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#list_address" class="text-overflow">List Receive Address</a></li>
+                        </ul>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#balance" class="text-overflow">Balance</a></li>
+                        </ul>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#unlock_wallet" class="text-overflow">Unlock Wallet</a></li>
+                        </ul>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#send_money" class="text-overflow">Send money</a></li>
+                        </ul>
+                        <ul class="nav nav-stacked">
+                            <li><a href="#get_transactions" class="text-overflow">Get Transactions</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1015,6 +1035,145 @@ Or
          
         </table>
                     </div>
+                </div>
+
+                <hr>
+                <div id="wallet" class="row">
+
+                    <div class="col-md-6">
+
+                        <h1>Wallet Actions</h1>
+                        <hr>
+                      </div>
+                    </div>
+                <div class="row">
+                  <div class="col-md-6">
+                        <p>These commands are local-only wallet actions that let you perform some wallet functions from the terminal(using curl) without having to load up bitmerchant in a browser</p>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                         
+                    </div>
+                </div>
+                <div id="list_address" class="row">
+                    <div class="col-md-6">
+                        <h3>List Receive Address</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Provides a receive address for your wallet</p>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <pre class="highlight"> GET http:&#x2F;&#x2F;localhost:4567&#x2F;wallet&#x2F;receive_address</pre>
+                          <h4>Example response</h4>
+                        <br>
+                        <pre class="highlight"> moCNAvSRLJxkFKNqLv1wtWbrUWy4iW6xeB (or your own bitcoin adress)</pre> 
+
+                    </div>
+
+                </div>
+
+                <hr>
+                <div id="balance" class="row">
+                    <div class="col-md-6">
+                        <h3>Balance</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>This gets your current wallet balance in BTC.</p>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <pre class="highlight"> GET http:&#x2F;&#x2F;localhost:4567&#x2F;wallet&#x2F;balance</pre>
+                          <h4>Example response</h4>
+                        <br>
+                        <pre class="highlight"> 0.01</pre> 
+
+                    </div>
+
+                </div>
+
+                <hr>
+                <div id="unlock_wallet" class="row">
+                    <div class="col-md-6">
+                        <h3>Unlock Wallet</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>This lets you unlock your wallet, if you set a password.</p>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <pre class="highlight"> POST http:&#x2F;&#x2F;localhost:4567&#x2F;wallet&#x2F;unlock_wallet&#x2F;password</pre>
+                          <h4>Example response</h4>
+                        <br>
+                        <pre class="highlight"> Your wallet is unlocked.</pre> 
+
+                    </div>
+
+                </div>
+
+                <hr>
+                <div id="send_money" class="row">
+                    <div class="col-md-6">
+                        <h3>Send money</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>This lets you send money using the terminal</p>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <pre class="highlight"> POST http:&#x2F;&#x2F;localhost:4567&#x2F;wallet&#x2F;send_money&#x2F;sendAmount&#x2F;toAddress</pre>
+                          <h4>Example response</h4>
+                        <br>
+                        <pre class="highlight"> Sending money...</pre> 
+
+                    </div>
+
+                </div>
+
+                <hr>
+                <div id="get_transactions" class="row">
+                    <div class="col-md-6">
+                        <h3>Get Transactions</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Provides a json response of all of your transactions</p>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <pre class="highlight"> GET http:&#x2F;&#x2F;localhost:4567&#x2F;wallet&#x2F;get_transactions</pre>
+                          <h4>Example response</h4>
+                        <br>
+                        <pre class="highlight"> [{&quot;transaction_hash&quot;:&quot;9dd1be04db6d9d0665351eb29dba9513d7902b7316bb8b24ebeb3fd91e5c020e&quot;,&quot;blockexplorer_url&quot;:&quot;https:&#x2F;&#x2F;www.blockexplorer.com&#x2F;testnet&#x2F;tx&#x2F;9dd1be04db6d9d0665351eb29dba9513d7902b7316bb8b24ebeb3fd91e5c020e&quot;,&quot;message&quot;:&quot;You sent bitcoin to an external account&quot;,&quot;address&quot;:&quot;mpKk85ZPdMmBAGf3jM2FYdLiPEgk9BSSPV&quot;,&quot;fee&quot;:&quot;-0.01 mBTC&quot;,&quot;amount&quot;:&quot;&lt;span class=&quot;text-danger&quot;&gt;-10.00 mBTC&lt;&#x2F;span&gt;&quot;,&quot;date&quot;:&quot;2015-05-13T17:50:25&quot;,&quot;longDate&quot;:&quot;1431539425217&quot;,&quot;status&quot;:&quot;&lt;span class=&quot;label label-success&quot;&gt; COMPLETED &lt;&#x2F;span&gt;&quot;,&quot;depth&quot;:&quot;3&quot;},...</pre> 
+
+                    </div>
+
                 </div>
 
                 <hr>

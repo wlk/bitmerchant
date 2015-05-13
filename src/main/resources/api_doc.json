@@ -326,6 +326,48 @@
           ]
         }
       ]
+    },
+    {
+      "id": "wallet",
+      "title": "Wallet Actions",
+      "body": "These commands are local-only wallet actions that let you perform some wallet functions from the terminal(using curl) without having to load up bitmerchant in a browser",
+      "h2": [
+        {
+          "id": "list_address",
+          "title": "List Receive Address",
+          "body": "Provides a receive address for your wallet",
+          "http_request": "GET http://localhost:4567/wallet/receive_address",
+          "example_response": "moCNAvSRLJxkFKNqLv1wtWbrUWy4iW6xeB (or your own bitcoin adress)"
+        },
+        {
+          "id": "balance",
+          "title": "Balance",
+          "body": "This gets your current wallet balance in BTC.",
+          "http_request": "GET http://localhost:4567/wallet/balance",
+          "example_response": 0.01
+        },
+        {
+          "id": "unlock_wallet",
+          "title": "Unlock Wallet",
+          "body": "This lets you unlock your wallet, if you set a password.",
+          "http_request": "POST http://localhost:4567/wallet/unlock_wallet/password",
+          "example_response": "Your wallet is unlocked."
+        },
+        {
+          "id": "send_money",
+          "title": "Send money",
+          "body": "This lets you send money using the terminal",
+          "http_request": "POST http://localhost:4567/wallet/send_money/sendAmount/toAddress",
+          "example_response": "Sending money..."
+        },
+        {
+          "id": "get_transactions",
+          "title": "Get Transactions",
+          "body": "Provides a json response of all of your transactions",
+          "http_request": "GET http://localhost:4567/wallet/get_transactions",
+          "example_response": "[{\"transaction_hash\":\"9dd1be04db6d9d0665351eb29dba9513d7902b7316bb8b24ebeb3fd91e5c020e\",\"blockexplorer_url\":\"https://www.blockexplorer.com/testnet/tx/9dd1be04db6d9d0665351eb29dba9513d7902b7316bb8b24ebeb3fd91e5c020e\",\"message\":\"You sent bitcoin to an external account\",\"address\":\"mpKk85ZPdMmBAGf3jM2FYdLiPEgk9BSSPV\",\"fee\":\"-0.01 mBTC\",\"amount\":\"<span class=\"text-danger\">-10.00 mBTC</span>\",\"date\":\"2015-05-13T17:50:25\",\"longDate\":\"1431539425217\",\"status\":\"<span class=\"label label-success\"> COMPLETED </span>\",\"depth\":\"3\"},..."
+        }
+      ]
     }
   ]
 }

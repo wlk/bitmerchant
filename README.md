@@ -80,6 +80,6 @@ If you'd like to contribute to the project, you can either post bounties for des
 
 ## Feature requests / todos
 * Increase memory params
-* Possible buttercoin integration
+* Add local-only send and check curl commands.
 * Add [-fullnode parameter]
 
